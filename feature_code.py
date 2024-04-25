@@ -407,8 +407,8 @@ def PSTNPds(inf, sequence_all, cell_line):
 
 
 ########################### extract first sequence feature##############################
-filename = 'data/K562/K562_RR_left_test'
-cell_line = 'K562/'
+filename = 'data/project_data/dev_left'
+cell_line = 'project_data/'
 
 inf = filename + '.fasta'
 outf = filename + '.txt'
@@ -465,8 +465,8 @@ feature5_1 = NPSE(k)
 # np.savetxt('NPSE_.txt',feature2)
 
 ########################### extract second sequence feature##############################
-filename = 'data/K562/K562_RR_right_test'
-cell_line = 'K562/'
+filename = 'data/project_data/dev_right'
+cell_line = 'project_data/'
 
 inf = filename + '.fasta'
 outf = filename + '.txt'
@@ -555,4 +555,4 @@ def load(feature1_1, feature1_2, feature2_1, feature2_2, x3_1, x3_2, x4_1, x4_2,
 x = load(feature1_1, feature1_2, feature2_1, feature2_2, x3_1, x3_2, x4_1, x4_2, feature5_1, feature5_2)
 
 x = np.expand_dims(x, 2)
-np.save('K562_RR_test.npy',x)
+np.save('project_dev.npy',x)

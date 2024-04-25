@@ -11,7 +11,7 @@ from sklearn.metrics import roc_curve, auc, precision_recall_fscore_support, acc
 import numpy as np
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation, Flatten, Dropout
-from keras.layers.normalization import BatchNormalization
+from keras.layers.normalization.batch_normalization import BatchNormalization
 from keras.optimizers import SGD, RMSprop, Adam, Adadelta
 from keras.utils import np_utils
 # convolutional layers
@@ -34,7 +34,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import classification_report
 
-MAX_EPOCH = 150
+MAX_EPOCH = 300
 BATCH_SIZE = 50
 # VERBOSE = 1
 # METRICS =['accuracy']
@@ -52,7 +52,7 @@ def SaveHistory(Tuning, outfile):
 
 
 def GetMetrics(model, x, y):
-    pred = model.predict_classes(x)
+    pred = np.argmax(model.predict(x), axis=1)
     pred_p = model.predict(x)
     fpr, tpr, thresholdTest = roc_curve(y, pred_p)
     aucv = auc(fpr, tpr)
@@ -130,7 +130,7 @@ def three_CNN_LSTM1(x_train, y_train, x_val, y_val, x_test, y_test, learning_rat
 
     filepath = "best_two_CNN_LSTM.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True)
-    early_stopping_monitor = EarlyStopping(monitor='val_loss', patience=6)
+    early_stopping_monitor = EarlyStopping(monitor='val_loss', patience=8)
     model.compile(loss=LOSS, optimizer=Adam(lr=learning_rate), metrics=['accuracy'])
     print(model.summary())
     Tuning = model.fit(x_train, y_train, batch_size=BATCH_SIZE, epochs=MAX_EPOCH,
